@@ -1,4 +1,4 @@
-import { Colour } from './enums'
+import { Colour, Orientation } from './enums'
 import { Card } from './card'
 
 const mainColourPairs: [Colour, Colour][] = [
@@ -49,15 +49,27 @@ export class Deck {
   }
 
   nextCard(): Card {
-    const card = this.cards.shift()
-    if (!card) {
+    const maybeCard = this.cards.shift()
+    if (!maybeCard) {
       throw new Error('[Card#nextCard] deck is empty')
     }
-    return card
+    return maybeCard
   }
 
   get numCardsLeft() {
     return this.cards.length
+  }
+
+  static findCard(mainColour1: Colour, mainColour2: Colour, cornerColour1: Colour, cornerColour2: Colour): Card {
+    const maybeCard = Deck.originalCards.find(card =>
+      card.colourAt(0, 1, Orientation.North) == mainColour1 &&
+      card.colourAt(0, 2, Orientation.North) == mainColour2 &&
+      card.colourAt(0, 0, Orientation.North) == cornerColour1 &&
+      card.colourAt(0, 3, Orientation.North) == cornerColour2)
+    if (!maybeCard) {
+      throw new Error('[Card#nextCard] deck is empty')
+    }
+    return maybeCard
   }
 
   private shuffle(): void {

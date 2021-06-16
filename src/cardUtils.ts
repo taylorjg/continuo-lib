@@ -1,4 +1,5 @@
 import { Card } from './card'
+import { PlacedCard } from './placedCard'
 import { Colour, Orientation } from './enums'
 
 const colourToString = (colour: Colour): string => {
@@ -17,5 +18,12 @@ export const printCard = (card: Card, orientation: Orientation = Orientation.Nor
   const lines = [0, 1, 2, 3].map(row =>
     [0, 1, 2, 3].map(col =>
       card.colourAt(row, col, orientation)).map(colourToString).join(''))
+  lines.forEach(line => console.log(line))
+}
+
+export const printPlacedCard = (placedCard: PlacedCard): void => {
+  const lines = [0, 1, 2, 3].map(row =>
+    [0, 1, 2, 3].map(col =>
+      placedCard.colourAt(row, col)).map(colourToString).join(''))
   lines.forEach(line => console.log(line))
 }
