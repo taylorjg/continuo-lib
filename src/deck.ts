@@ -51,7 +51,7 @@ export class Deck {
   nextCard(): Card {
     const maybeCard = this.cards.shift()
     if (!maybeCard) {
-      throw new Error('[Card#nextCard] deck is empty')
+      throw new Error('[Deck#nextCard] deck is empty')
     }
     return maybeCard
   }
@@ -67,7 +67,7 @@ export class Deck {
       card.colourAt(0, 0, Orientation.North) == cornerColour1 &&
       card.colourAt(0, 3, Orientation.North) == cornerColour2)
     if (!maybeCard) {
-      throw new Error('[Card#nextCard] deck is empty')
+      throw new Error('[Deck#findCard] card not found')
     }
     return maybeCard
   }
