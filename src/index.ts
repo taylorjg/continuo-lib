@@ -1,7 +1,7 @@
+import { printPlacedCard } from './cardUtils'
 import { Deck } from './deck'
 import { Colour, Orientation } from './enums'
 import { PlacedCard } from './placedCard'
-import { printPlacedCard } from './cardUtils'
 
 const main = (): void => {
   const deck = new Deck()

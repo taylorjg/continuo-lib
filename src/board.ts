@@ -1,7 +1,5 @@
-import { PlacedCard } from './placedCard'
 import { Colour } from './enums'
-
-const makeCellMapKey = (row: number, col: number): string => `${row}:${col}`
+import { PlacedCard } from './placedCard'
 
 export class Board {
 
@@ -15,7 +13,7 @@ export class Board {
       for (const colWithinCard of [0, 1, 2, 3]) {
         const row = proposedRow + rowWithinCard
         const col = proposedCol + colWithinCard
-        const key = makeCellMapKey(row, col)
+        const key = Board.makeCellMapKey(row, col)
         if (this.cellMap.has(key)) {
           return false
         }
@@ -30,11 +28,15 @@ export class Board {
       for (const colWithinCard of [0, 1, 2, 3]) {
         const row = placedCard.row + rowWithinCard
         const col = placedCard.col + colWithinCard
-        const key = makeCellMapKey(row, col)
+        const key = Board.makeCellMapKey(row, col)
         const value = placedCard.colourAt(rowWithinCard, colWithinCard)
         newCellMap.set(key, value)
       }
     }
     return new Board(newCellMap)
+  }
+
+  private static makeCellMapKey(row: number, col: number): string {
+    return `${row}:${col}`
   }
 }

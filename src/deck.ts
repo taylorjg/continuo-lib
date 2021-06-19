@@ -1,5 +1,5 @@
-import { Colour, Orientation } from './enums'
 import { Card } from './card'
+import { Colour, Orientation } from './enums'
 
 const mainColourPairs: [Colour, Colour][] = [
   [Colour.Yellow, Colour.Red],
@@ -35,7 +35,7 @@ const makeCards = (): Card[] => mainColourPairs.flatMap(makeCardsForMainColourPa
 
 export class Deck {
 
-  private static originalCards: readonly Card[] = makeCards()
+  private static readonly originalCards: readonly Card[] = makeCards()
 
   private cards: Card[] = Deck.originalCards.slice()
 
@@ -74,5 +74,7 @@ export class Deck {
 
   private shuffle(): void {
     // TODO: shuffle this.cards
+    // e.g. Fisher–Yates shuffle
+    // https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
   }
 }

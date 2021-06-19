@@ -1,6 +1,6 @@
 import { Card } from './card'
-import { PlacedCard } from './placedCard'
 import { Colour, Orientation } from './enums'
+import { PlacedCard } from './placedCard'
 
 const colourToString = (colour: Colour): string => {
   const ESC = '\x1B'
