@@ -39,16 +39,16 @@ export class Deck {
 
   private cards: Card[] = Deck.originalCards.slice()
 
-  constructor() {
+  public constructor() {
     this.shuffle()
   }
 
-  reset(): void {
+  public reset(): void {
     this.cards = Deck.originalCards.slice()
     this.shuffle()
   }
 
-  nextCard(): Card {
+  public nextCard(): Card {
     const maybeCard = this.cards.shift()
     if (!maybeCard) {
       throw new Error('[Deck#nextCard] deck is empty')
@@ -56,11 +56,11 @@ export class Deck {
     return maybeCard
   }
 
-  get numCardsLeft() {
+  public get numCardsLeft() {
     return this.cards.length
   }
 
-  static findCard(mainColour1: Colour, mainColour2: Colour, cornerColour1: Colour, cornerColour2: Colour): Card {
+  public static findCard(mainColour1: Colour, mainColour2: Colour, cornerColour1: Colour, cornerColour2: Colour): Card {
     const maybeCard = Deck.originalCards.find(card =>
       card.colourAt(0, 1, Orientation.North) == mainColour1 &&
       card.colourAt(0, 2, Orientation.North) == mainColour2 &&

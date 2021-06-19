@@ -11,15 +11,16 @@ export class Card {
 
   private readonly colours: readonly Colour[]
 
-  constructor(mainColour1: Colour, mainColour2: Colour, cornerColour1: Colour, cornerColour2: Colour) {
+  public constructor(mainColour1: Colour, mainColour2: Colour, cornerColour1: Colour, cornerColour2: Colour) {
     this.colours = [mainColour1, mainColour2, cornerColour1, cornerColour2]
   }
 
-  colourAt(row: number, col: number, orientation: Orientation): Colour {
+  public colourAt(rowWithinCard: number, colWithinCard: number, orientation: Orientation): Colour {
+    // Due to card symmetry, North is same as South and East is same as West
     const rotated = orientation == Orientation.East || orientation == Orientation.West
-    const adjustedRow = rotated ? col : row
-    const adjustedCol = rotated ? 3 - row : col
-    const colourIndex = Card.colourIndices[adjustedRow][adjustedCol]
+    const adjustedRowWithinCard = rotated ? colWithinCard : rowWithinCard
+    const adjustedColWithinCard = rotated ? 3 - rowWithinCard : colWithinCard
+    const colourIndex = Card.colourIndices[adjustedRowWithinCard][adjustedColWithinCard]
     return this.colours[colourIndex]
   }
 }
