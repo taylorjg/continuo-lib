@@ -5,9 +5,11 @@ import { PlacedCard } from './placedCard'
 
 export class Board {
 
-  public static readonly empty = new Board(new Map<string, Colour>())
+  public static readonly empty = new Board(new Map<string, Colour>(), [])
 
-  private constructor(private readonly cellMap: Map<string, Colour>) {
+  private constructor(
+    private readonly cellMap: Map<string, Colour>,
+    private readonly placedCards: readonly PlacedCard[]) {
   }
 
   public canPlaceCardAt(proposedRow: number, proposedCol: number): boolean {
@@ -26,6 +28,7 @@ export class Board {
 
   public placeCard(placedCard: PlacedCard): Board {
     const newCellMap = new Map<string, Colour>(this.cellMap)
+    const newPlacedCards = this.placedCards.slice()
     for (const rowWithinCard of [0, 1, 2, 3]) {
       for (const colWithinCard of [0, 1, 2, 3]) {
         const row = placedCard.row + rowWithinCard
@@ -35,7 +38,23 @@ export class Board {
         newCellMap.set(key, value)
       }
     }
-    return new Board(newCellMap)
+    newPlacedCards.push(placedCard)
+    return new Board(newCellMap, newPlacedCards)
+  }
+
+  public findAvailableCardPositions(): Cell[] {
+    if (this.placedCards.length == 0) return [new Cell(0, 0)]
+    const offsets = [-3, -2, -1, 0, 1, 2, 3]
+    const availableCardPositions: Cell[] = []
+    for (const placedCard of this.placedCards) {
+      for (const offset of offsets) {
+        availableCardPositions.push(new Cell(placedCard.row - 4, placedCard.col + offset))
+        availableCardPositions.push(new Cell(placedCard.row + 4, placedCard.col + offset))
+        availableCardPositions.push(new Cell(placedCard.row + offset, placedCard.col - 4))
+        availableCardPositions.push(new Cell(placedCard.row + offset, placedCard.col + 4))
+      }
+    }
+    return availableCardPositions.filter(cell => this.canPlaceCardAt(cell.row, cell.col))
   }
 
   public followChain(initialCell: Cell, initialDirection: Direction): Chain {

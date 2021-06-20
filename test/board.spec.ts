@@ -41,6 +41,23 @@ describe('Board tests', () => {
     })
   })
 
+  describe('findAvailableCardPositions', () => {
+
+    it('with no cards placed', () => {
+      const availableCardPositions = Board.empty.findAvailableCardPositions()
+      expect(availableCardPositions).toHaveLength(1)
+      expect(availableCardPositions[0].equals(new Cell(0, 0))).toBe(true)
+    })
+
+    it('with one card placed', () => {
+      const card = Deck.findCard(Colour.Blue, Colour.Green, Colour.Green, Colour.Blue)
+      const placedCard = new PlacedCard(card, 0, 0, Orientation.North)
+      const board = Board.empty.placeCard(placedCard)
+      const availableCardPositions = board.findAvailableCardPositions()
+      expect(availableCardPositions).toHaveLength(28)
+    })
+  })
+
   describe('followChain', () => {
 
     let board: Board
