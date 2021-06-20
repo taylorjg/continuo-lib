@@ -38,10 +38,7 @@ export class Board {
     return new Board(newCellMap)
   }
 
-  public followChain(
-    initialCell: Cell,
-    initialDirection: Direction,
-    existingChain: Chain = Chain.empty): Chain {
+  public followChain(initialCell: Cell, initialDirection: Direction): Chain {
     const cells: Cell[] = [initialCell]
     const chainColour = this.lookupCell(initialCell)
     if (chainColour == undefined) {
@@ -62,11 +59,13 @@ export class Board {
       }
       if (!nextCell) break
       currentCell = nextCell
+      // TODO: check for cycles
       cells.push(nextCell)
     }
     return new Chain(cells)
   }
 
+  // TODO: implement this
   public toString(): string {
     return '[Board] TODO'
   }

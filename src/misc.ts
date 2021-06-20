@@ -4,6 +4,7 @@ import { Cell } from './cell'
 import { Direction } from './enums'
 import { PlacedCard } from './placedCard'
 
+// TODO: extract to a separate file
 export class Chain {
 
   public static readonly empty = new Chain([])
@@ -24,6 +25,7 @@ export class Chain {
   }
 }
 
+// TODO: extract to a separate file
 export class PossibleMove {
 
   public readonly score: number
@@ -42,13 +44,13 @@ export class PossibleMove {
   }
 }
 
-const perimeterCells = [
-  // outer corners
+const startingPoints = [
+  // 4 corner cells: top left, top right, bottom right, bottom left
   { rowWithinCard: 0, colWithinCard: 0, forwardDirection: Direction.Up, backwardDirection: Direction.Left },
   { rowWithinCard: 0, colWithinCard: 3, forwardDirection: Direction.Up, backwardDirection: Direction.Right },
   { rowWithinCard: 3, colWithinCard: 3, forwardDirection: Direction.Down, backwardDirection: Direction.Right },
   { rowWithinCard: 3, colWithinCard: 0, forwardDirection: Direction.Down, backwardDirection: Direction.Left },
-  // inner corners
+  // 4 centre cells: top left, top right, bottom right, bottom left
   { rowWithinCard: 1, colWithinCard: 1, forwardDirection: Direction.Up, backwardDirection: Direction.Left },
   { rowWithinCard: 1, colWithinCard: 2, forwardDirection: Direction.Up, backwardDirection: Direction.Right },
   { rowWithinCard: 2, colWithinCard: 2, forwardDirection: Direction.Down, backwardDirection: Direction.Right },
@@ -58,14 +60,15 @@ const perimeterCells = [
 export const evaluatePlacedCard = (board: Board, placedCard: PlacedCard): PossibleMove => {
   const newBoard = board.placeCard(placedCard)
   const chains: Chain[] = []
-  for (const perimeterCell of perimeterCells) {
-    const { rowWithinCard, colWithinCard, forwardDirection, backwardDirection } = perimeterCell
+  for (const startingPoint of startingPoints) {
+    const { rowWithinCard, colWithinCard, forwardDirection, backwardDirection } = startingPoint
     const row = placedCard.row + rowWithinCard
     const col = placedCard.col + colWithinCard
     const cell = new Cell(row, col)
     const forwardChain = newBoard.followChain(cell, forwardDirection)
-    const backwardChain = newBoard.followChain(cell, backwardDirection, forwardChain)
+    const backwardChain = newBoard.followChain(cell, backwardDirection)
     const mergedChain = new Chain(backwardChain.cells.slice(1).reverse().concat(forwardChain.cells))
+    // TODO: extract a method to check whether a board location lies within a placed card
     const chainIncludesAnotherCard = mergedChain.cells.some(cell => (
       cell.row < placedCard.row ||
       cell.row > placedCard.row + 3 ||
