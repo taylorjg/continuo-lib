@@ -2,21 +2,25 @@ import { Board } from './board'
 import { Card } from './card'
 import { Cell } from './cell'
 import { Chain } from './chain'
-import { Direction } from './enums'
+import { Direction, Orientation } from './enums'
 import { PlacedCard } from './placedCard'
 import { PossibleMove } from './possibleMove'
 
+// A..B
+// .EF.
+// .GH.
+// C..D
 const startingPoints = [
-  // 4 corner cells: top left, top right, bottom right, bottom left
+  // Corner cells: A, B, C, D
   { rowWithinCard: 0, colWithinCard: 0, forwardDirection: Direction.Up, backwardDirection: Direction.Left },
   { rowWithinCard: 0, colWithinCard: 3, forwardDirection: Direction.Up, backwardDirection: Direction.Right },
-  { rowWithinCard: 3, colWithinCard: 3, forwardDirection: Direction.Down, backwardDirection: Direction.Right },
   { rowWithinCard: 3, colWithinCard: 0, forwardDirection: Direction.Down, backwardDirection: Direction.Left },
-  // 4 centre cells: top left, top right, bottom right, bottom left
+  { rowWithinCard: 3, colWithinCard: 3, forwardDirection: Direction.Down, backwardDirection: Direction.Right },
+  // Centre cells: E, F, G, H
   { rowWithinCard: 1, colWithinCard: 1, forwardDirection: Direction.Up, backwardDirection: Direction.Left },
   { rowWithinCard: 1, colWithinCard: 2, forwardDirection: Direction.Up, backwardDirection: Direction.Right },
-  { rowWithinCard: 2, colWithinCard: 2, forwardDirection: Direction.Down, backwardDirection: Direction.Right },
-  { rowWithinCard: 2, colWithinCard: 1, forwardDirection: Direction.Down, backwardDirection: Direction.Left }
+  { rowWithinCard: 2, colWithinCard: 1, forwardDirection: Direction.Down, backwardDirection: Direction.Left },
+  { rowWithinCard: 2, colWithinCard: 2, forwardDirection: Direction.Down, backwardDirection: Direction.Right }
 ]
 
 export const evaluatePlacedCard = (board: Board, placedCard: PlacedCard): PossibleMove => {
@@ -43,10 +47,18 @@ export const evaluatePlacedCard = (board: Board, placedCard: PlacedCard): Possib
 }
 
 export const evaluateCard = (board: Board, card: Card): PossibleMove[] => {
-  // get a list of all valid board positions where a card can be placed
-  // for each valid board position:
-  //   create a placed card with Orientation.North and call evaluatePlacedCard
-  //   create a placed card with Orientation.East and call evaluatePlacedCard
-  // sort by highest score then by longest chain
-  return []
+  const availableCardPositions = board.findAvailableCardPositions()
+  const possibleMoves = availableCardPositions.flatMap(cell => {
+    const placedCard1 = new PlacedCard(card, cell.row, cell.col, Orientation.North)
+    const placedCard2 = new PlacedCard(card, cell.row, cell.col, Orientation.East)
+    const possibleMove1 = evaluatePlacedCard(board, placedCard1)
+    const possibleMove2 = evaluatePlacedCard(board, placedCard2)
+    return [possibleMove1, possibleMove2]
+  })
+  return possibleMoves.sort((pm1, pm2) => {
+    if (pm1.score != pm2.score) return pm2.score - pm1.score
+    const longestChainLength1 = Math.max(...pm1.chains.map(chain => chain.length))
+    const longestChainLength2 = Math.max(...pm2.chains.map(chain => chain.length))
+    return longestChainLength2 - longestChainLength1
+  })
 }
