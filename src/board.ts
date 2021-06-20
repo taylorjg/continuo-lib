@@ -59,7 +59,7 @@ export class Board {
       }
       if (!nextCell) break
       currentCell = nextCell
-      // TODO: check for cycles
+      if (cells.some(cell => cell.equals(currentCell))) break
       cells.push(nextCell)
     }
     return new Chain(cells)

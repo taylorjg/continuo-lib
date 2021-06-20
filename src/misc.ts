@@ -16,12 +16,22 @@ export class Chain {
     return this.cells.length
   }
 
+  public get isCycle(): boolean {
+    if (this.length < 4) return false
+    const firstCell = this.cells[0]
+    const lastCell = this.cells.slice(-1)[0]
+    const rowDiff = Math.abs(firstCell.row - lastCell.row)
+    const colDiff = Math.abs(firstCell.col - lastCell.col)
+    const manhattanDistance = rowDiff + colDiff
+    return manhattanDistance == 1
+  }
+
   public containsCell(cellToFind: Cell): boolean {
     return this.cells.findIndex(cell => cell.equals(cellToFind)) >= 0
   }
 
   public toString(): string {
-    return '[' + this.cells.map(cell => `${cell}`).join(', ') + ']'
+    return '[' + this.cells.map(cell => `${cell}`).join(', ') + ']' + ` isCycle: ${this.isCycle}`
   }
 }
 
@@ -66,17 +76,21 @@ export const evaluatePlacedCard = (board: Board, placedCard: PlacedCard): Possib
     const col = placedCard.col + colWithinCard
     const cell = new Cell(row, col)
     const forwardChain = newBoard.followChain(cell, forwardDirection)
-    const backwardChain = newBoard.followChain(cell, backwardDirection)
-    const mergedChain = new Chain(backwardChain.cells.slice(1).reverse().concat(forwardChain.cells))
-    // TODO: extract a method to check whether a board location lies within a placed card
-    const chainIncludesAnotherCard = mergedChain.cells.some(cell => (
-      cell.row < placedCard.row ||
-      cell.row > placedCard.row + 3 ||
-      cell.col < placedCard.col ||
-      cell.col > placedCard.col + 3
-    ))
-    if (chainIncludesAnotherCard) {
-      chains.push(mergedChain)
+    if (forwardChain.isCycle) {
+      chains.push(forwardChain)
+    } else {
+      const backwardChain = newBoard.followChain(cell, backwardDirection)
+      const mergedChain = new Chain(backwardChain.cells.slice(1).reverse().concat(forwardChain.cells))
+      // TODO: extract a method to check whether a board location lies within a placed card
+      const chainIncludesAnotherCard = mergedChain.cells.some(cell => (
+        cell.row < placedCard.row ||
+        cell.row > placedCard.row + 3 ||
+        cell.col < placedCard.col ||
+        cell.col > placedCard.col + 3
+      ))
+      if (chainIncludesAnotherCard) {
+        chains.push(mergedChain)
+      }
     }
   }
   return new PossibleMove(placedCard, chains)
