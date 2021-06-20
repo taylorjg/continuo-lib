@@ -1,6 +1,6 @@
 import { Cell } from './cell'
 import { Colour, Direction, notBackwards } from './enums'
-import { Chain } from './misc'
+import { Chain } from './chain'
 import { PlacedCard } from './placedCard'
 
 export class Board {
@@ -65,7 +65,7 @@ export class Board {
     return new Chain(cells)
   }
 
-  // TODO: implement this
+  // TODO: finish implementing this
   public toString(): string {
     return '[Board] TODO'
   }
