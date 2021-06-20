@@ -43,23 +43,16 @@ export class PossibleMove {
 }
 
 const perimeterCells = [
-  // corners
+  // outer corners
   { rowWithinCard: 0, colWithinCard: 0, forwardDirection: Direction.Up, backwardDirection: Direction.Left },
   { rowWithinCard: 0, colWithinCard: 3, forwardDirection: Direction.Up, backwardDirection: Direction.Right },
   { rowWithinCard: 3, colWithinCard: 3, forwardDirection: Direction.Down, backwardDirection: Direction.Right },
   { rowWithinCard: 3, colWithinCard: 0, forwardDirection: Direction.Down, backwardDirection: Direction.Left },
-  // top middle
-  { rowWithinCard: 0, colWithinCard: 1, forwardDirection: Direction.Up, backwardDirection: Direction.Down },
-  { rowWithinCard: 0, colWithinCard: 2, forwardDirection: Direction.Up, backwardDirection: Direction.Down },
-  // bottom middle
-  { rowWithinCard: 3, colWithinCard: 1, forwardDirection: Direction.Down, backwardDirection: Direction.Up },
-  { rowWithinCard: 3, colWithinCard: 2, forwardDirection: Direction.Down, backwardDirection: Direction.Up },
-  // left middle
-  { rowWithinCard: 1, colWithinCard: 0, forwardDirection: Direction.Left, backwardDirection: Direction.Right },
-  { rowWithinCard: 2, colWithinCard: 0, forwardDirection: Direction.Left, backwardDirection: Direction.Right },
-  // right middle
-  { rowWithinCard: 1, colWithinCard: 3, forwardDirection: Direction.Right, backwardDirection: Direction.Left },
-  { rowWithinCard: 2, colWithinCard: 3, forwardDirection: Direction.Right, backwardDirection: Direction.Left }
+  // inner corners
+  { rowWithinCard: 1, colWithinCard: 1, forwardDirection: Direction.Up, backwardDirection: Direction.Left },
+  { rowWithinCard: 1, colWithinCard: 2, forwardDirection: Direction.Up, backwardDirection: Direction.Right },
+  { rowWithinCard: 2, colWithinCard: 2, forwardDirection: Direction.Down, backwardDirection: Direction.Right },
+  { rowWithinCard: 2, colWithinCard: 1, forwardDirection: Direction.Down, backwardDirection: Direction.Left }
 ]
 
 export const evaluatePlacedCard = (board: Board, placedCard: PlacedCard): PossibleMove => {
@@ -70,14 +63,16 @@ export const evaluatePlacedCard = (board: Board, placedCard: PlacedCard): Possib
     const row = placedCard.row + rowWithinCard
     const col = placedCard.col + colWithinCard
     const cell = new Cell(row, col)
-    if (chains.some(chain => chain.containsCell(cell))) {
-      continue
-    }
     const forwardChain = newBoard.followChain(cell, forwardDirection)
-    // console.log('forwardChain:', `${forwardChain}`)
-    if (forwardChain.length > 1) {
-      const backwardChain = newBoard.followChain(cell, backwardDirection, forwardChain)
-      const mergedChain = new Chain(backwardChain.cells.slice(1).reverse().concat(forwardChain.cells))
+    const backwardChain = newBoard.followChain(cell, backwardDirection, forwardChain)
+    const mergedChain = new Chain(backwardChain.cells.slice(1).reverse().concat(forwardChain.cells))
+    const chainIncludesAnotherCard = mergedChain.cells.some(cell => (
+      cell.row < placedCard.row ||
+      cell.row > placedCard.row + 3 ||
+      cell.col < placedCard.col ||
+      cell.col > placedCard.col + 3
+    ))
+    if (chainIncludesAnotherCard) {
       chains.push(mergedChain)
     }
   }
