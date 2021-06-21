@@ -56,9 +56,8 @@ export const evaluateCard = (board: Board, card: Card): PossibleMove[] => {
     return [possibleMove1, possibleMove2]
   })
   return possibleMoves.sort((pm1, pm2) => {
-    if (pm1.score != pm2.score) return pm2.score - pm1.score
-    const longestChainLength1 = Math.max(...pm1.chains.map(chain => chain.length))
-    const longestChainLength2 = Math.max(...pm2.chains.map(chain => chain.length))
-    return longestChainLength2 - longestChainLength1
+    return pm1.score == pm2.score
+      ? pm2.longestChainLength - pm1.longestChainLength
+      : pm2.score - pm1.score
   })
 }

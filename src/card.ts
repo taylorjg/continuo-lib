@@ -9,7 +9,7 @@ export class Card {
     [3, 1, 0, 2]
   ]
 
-  private readonly colours: readonly Colour[]
+  private readonly colours: readonly [Colour, Colour, Colour, Colour]
 
   public constructor(mainColour1: Colour, mainColour2: Colour, cornerColour1: Colour, cornerColour2: Colour) {
     this.colours = [mainColour1, mainColour2, cornerColour1, cornerColour2]
