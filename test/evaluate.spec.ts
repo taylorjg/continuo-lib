@@ -1,10 +1,10 @@
 import { Board } from '../src/board'
 import { Deck } from '../src/deck'
 import { Colour, Orientation } from '../src/enums'
-import { evaluatePlacedCard, evaluateCard } from '../src/misc'
+import { evaluatePlacedCard, evaluateCard } from '../src/evaluate'
 import { PlacedCard } from '../src/placedCard'
 
-describe('Misc tests', () => {
+describe('Evaluate tests', () => {
 
   describe('evaluatePlacedCard', () => {
 
