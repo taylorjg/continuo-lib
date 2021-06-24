@@ -24,8 +24,4 @@ export class Chain {
   public containsCell(cellToFind: Cell): boolean {
     return this.cells.findIndex(cell => cell.equals(cellToFind)) >= 0
   }
-
-  public toString(): string {
-    return '[' + this.cells.map(cell => `${cell}`).join(', ') + ']' + ` isCycle: ${this.isCycle}`
-  }
 }

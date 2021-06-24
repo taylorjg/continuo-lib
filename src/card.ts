@@ -23,9 +23,4 @@ export class Card {
     const colourIndex = Card.colourIndices[adjustedRowWithinCard][adjustedColWithinCard]
     return this.colours[colourIndex]
   }
-
-  // TODO: finish implementing this
-  public toString(): string {
-    return '[Card] TODO'
-  }
 }

@@ -23,9 +23,4 @@ export class PlacedCard {
       cell.col <= this.col + 3
     )
   }
-
-  // TODO: finish implementing this
-  public toString(): string {
-    return '[PlacedCard] TODO'
-  }
 }

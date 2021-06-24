@@ -84,11 +84,6 @@ export class Board {
     return new Chain(cells)
   }
 
-  // TODO: finish implementing this
-  public toString(): string {
-    return '[Board] TODO'
-  }
-
   private lookupCell(cell: Cell): Colour | undefined {
     const key = Board.makeCellMapKey(cell.row, cell.col)
     return this.cellMap.get(key)

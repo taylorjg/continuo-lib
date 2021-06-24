@@ -19,8 +19,4 @@ export class Cell {
       case Direction.Right: return new Cell(this.row, this.col + 1)
     }
   }
-
-  public toString(): string {
-    return `(${this.row},${this.col})`
-  }
 }
