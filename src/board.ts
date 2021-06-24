@@ -28,7 +28,6 @@ export class Board {
 
   public placeCard(placedCard: PlacedCard): Board {
     const newCellMap = new Map<string, Colour>(this.cellMap)
-    const newPlacedCards = this.placedCards.slice()
     for (const rowWithinCard of [0, 1, 2, 3]) {
       for (const colWithinCard of [0, 1, 2, 3]) {
         const row = placedCard.row + rowWithinCard
@@ -38,6 +37,7 @@ export class Board {
         newCellMap.set(key, value)
       }
     }
+    const newPlacedCards = this.placedCards.slice()
     newPlacedCards.push(placedCard)
     return new Board(newCellMap, newPlacedCards)
   }
