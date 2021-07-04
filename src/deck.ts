@@ -76,7 +76,7 @@ export class Deck {
       return [maybeCard2, Orientation.East]
     }
 
-    throw new Error('[Deck#findCard] card not found')
+    throw new Error('[Deck.findCard] card not found')
   }
 
   private static findCardInternal(
