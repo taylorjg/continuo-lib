@@ -9,8 +9,8 @@ describe('Evaluate tests', () => {
   describe('evaluatePlacedCard', () => {
 
     it('without cycles', () => {
-      const card1 = Deck.findCard(Colour.Blue, Colour.Green, Colour.Green, Colour.Blue)
-      const card2 = Deck.findCard(Colour.Blue, Colour.Green, Colour.Red, Colour.Blue)
+      const [card1] = Deck.findCard(Colour.Blue, Colour.Green, Colour.Green, Colour.Blue)
+      const [card2] = Deck.findCard(Colour.Blue, Colour.Green, Colour.Red, Colour.Blue)
       const placedCard1 = new PlacedCard(card1, 0, 0, Orientation.North)
       const placedCard2 = new PlacedCard(card2, -1, 4, Orientation.North)
       const board = Board.empty.placeCard(placedCard1)
@@ -20,7 +20,7 @@ describe('Evaluate tests', () => {
     })
 
     it('with cycles', () => {
-      const card1 = Deck.findCard(Colour.Blue, Colour.Green, Colour.Green, Colour.Blue)
+      const [card1] = Deck.findCard(Colour.Blue, Colour.Green, Colour.Green, Colour.Blue)
       const placedCard1 = new PlacedCard(card1, 0, 0, Orientation.North)
       const placedCard2 = new PlacedCard(card1, 0, 4, Orientation.East)
       const placedCard3 = new PlacedCard(card1, 4, 4, Orientation.North)
@@ -37,8 +37,8 @@ describe('Evaluate tests', () => {
 
   describe('evaluateCard', () => {
     it('with one card placed', () => {
-      const card1 = Deck.findCard(Colour.Blue, Colour.Green, Colour.Green, Colour.Blue)
-      const card2 = Deck.findCard(Colour.Blue, Colour.Green, Colour.Red, Colour.Blue)
+      const [card1] = Deck.findCard(Colour.Blue, Colour.Green, Colour.Green, Colour.Blue)
+      const [card2] = Deck.findCard(Colour.Blue, Colour.Green, Colour.Red, Colour.Blue)
       const placedCard1 = new PlacedCard(card1, 0, 0, Orientation.North)
       const board = Board.empty.placeCard(placedCard1)
       const possibleMoves = evaluateCard(board, card2)

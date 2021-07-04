@@ -60,16 +60,36 @@ export class Deck {
     return this.cards.length
   }
 
-  public static findCard(mainColour1: Colour, mainColour2: Colour, cornerColour1: Colour, cornerColour2: Colour): Card {
-    const maybeCard = Deck.originalCards.find(card =>
-      card.colourAt(0, 1, Orientation.North) == mainColour1 &&
-      card.colourAt(0, 2, Orientation.North) == mainColour2 &&
-      card.colourAt(0, 0, Orientation.North) == cornerColour1 &&
-      card.colourAt(0, 3, Orientation.North) == cornerColour2)
-    if (!maybeCard) {
-      throw new Error('[Deck#findCard] card not found')
+  public static findCard(
+    mainColour1: Colour,
+    mainColour2: Colour,
+    cornerColour1: Colour,
+    cornerColour2: Colour): [Card, Orientation] {
+
+    const maybeCard1 = Deck.findCardInternal(mainColour1, mainColour2, cornerColour1, cornerColour2, Orientation.North)
+    if (maybeCard1) {
+      return [maybeCard1, Orientation.North]
     }
-    return maybeCard
+
+    const maybeCard2 = Deck.findCardInternal(mainColour1, mainColour2, cornerColour1, cornerColour2, Orientation.East)
+    if (maybeCard2) {
+      return [maybeCard2, Orientation.East]
+    }
+
+    throw new Error('[Deck#findCard] card not found')
+  }
+
+  private static findCardInternal(
+    mainColour1: Colour,
+    mainColour2: Colour,
+    cornerColour1: Colour,
+    cornerColour2: Colour,
+    orientation: Orientation): Card | undefined {
+    return Deck.originalCards.find(card =>
+      card.colourAt(0, 1, orientation) == mainColour1 &&
+      card.colourAt(0, 2, orientation) == mainColour2 &&
+      card.colourAt(0, 0, orientation) == cornerColour1 &&
+      card.colourAt(0, 3, orientation) == cornerColour2)
   }
 
   private shuffle(): void {

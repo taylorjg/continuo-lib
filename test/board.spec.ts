@@ -50,8 +50,8 @@ describe('Board tests', () => {
     })
 
     it('with one card placed', () => {
-      const card = Deck.findCard(Colour.Blue, Colour.Green, Colour.Green, Colour.Blue)
-      const placedCard = new PlacedCard(card, 0, 0, Orientation.North)
+      const [card, orientation] = Deck.findCard(Colour.Blue, Colour.Green, Colour.Green, Colour.Blue)
+      const placedCard = new PlacedCard(card, 0, 0, orientation)
       const board = Board.empty.placeCard(placedCard)
       const availableCardPositions = board.findAvailableCardPositions()
       expect(availableCardPositions).toHaveLength(28)
@@ -63,10 +63,10 @@ describe('Board tests', () => {
     let board: Board
 
     const setup = () => {
-      const card1 = Deck.findCard(Colour.Blue, Colour.Green, Colour.Green, Colour.Blue)
-      const card2 = Deck.findCard(Colour.Blue, Colour.Green, Colour.Red, Colour.Blue)
-      const placedCard1 = new PlacedCard(card1, 0, 0, Orientation.North)
-      const placedCard2 = new PlacedCard(card2, -1, 4, Orientation.North)
+      const [card1, orientation1] = Deck.findCard(Colour.Blue, Colour.Green, Colour.Green, Colour.Blue)
+      const [card2, orientation2] = Deck.findCard(Colour.Blue, Colour.Green, Colour.Red, Colour.Blue)
+      const placedCard1 = new PlacedCard(card1, 0, 0, orientation1)
+      const placedCard2 = new PlacedCard(card2, -1, 4, orientation2)
       board = Board.empty
         .placeCard(placedCard1)
         .placeCard(placedCard2)
