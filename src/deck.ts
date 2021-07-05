@@ -35,7 +35,7 @@ const makeCards = (): Card[] => mainColourPairs.flatMap(makeCardsForMainColourPa
 
 export class Deck {
 
-  private static readonly originalCards: readonly Card[] = makeCards()
+  public static readonly originalCards: readonly Card[] = makeCards()
 
   private cards: Card[] = Deck.originalCards.slice()
 
