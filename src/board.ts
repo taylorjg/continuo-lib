@@ -84,6 +84,30 @@ export class Board {
     return new Chain(cells)
   }
 
+  public getBoundaries(): [number, number, number, number] {
+    let leftMostCol
+    let rightMostCol
+    let topMostRow
+    let bottomMostRow
+    for (const placedCard of this.placedCards) {
+      const row = placedCard.row
+      const col = placedCard.col
+      if (leftMostCol == undefined || col < leftMostCol) {
+        leftMostCol = col
+      }
+      if (rightMostCol == undefined || col > rightMostCol) {
+        rightMostCol = col
+      }
+      if (topMostRow == undefined || row < topMostRow) {
+        topMostRow = row
+      }
+      if (bottomMostRow == undefined || row > bottomMostRow) {
+        bottomMostRow = row
+      }
+    }
+    return [leftMostCol ?? 0, (rightMostCol ?? 0) + 3, topMostRow ?? 0, (bottomMostRow ?? 0) + 3]
+  }
+
   private lookupCell(cell: Cell): Colour | undefined {
     const key = Board.makeCellMapKey(cell.row, cell.col)
     return this.cellMap.get(key)
