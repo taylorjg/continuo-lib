@@ -1,3 +1,4 @@
+import arrayShuffle from 'array-shuffle'
 import { Card } from './card'
 import { Colour, Orientation } from './enums'
 
@@ -37,15 +38,14 @@ export class Deck {
 
   public static readonly originalCards: readonly Card[] = makeCards()
 
-  private cards: Card[] = Deck.originalCards.slice()
+  private cards: Card[]
 
   public constructor() {
-    this.shuffle()
+    this.cards = arrayShuffle(Deck.originalCards)
   }
 
   public reset(): void {
-    this.cards = Deck.originalCards.slice()
-    this.shuffle()
+    this.cards = arrayShuffle(Deck.originalCards)
   }
 
   public nextCard(): Card {
@@ -90,11 +90,5 @@ export class Deck {
       card.colourAt(0, 2, orientation) == mainColour2 &&
       card.colourAt(0, 0, orientation) == cornerColour1 &&
       card.colourAt(0, 3, orientation) == cornerColour2)
-  }
-
-  private shuffle(): void {
-    // TODO: shuffle this.cards
-    // e.g. Fisher–Yates shuffle
-    // https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
   }
 }

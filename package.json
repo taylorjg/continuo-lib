@@ -9,7 +9,9 @@
   },
   "author": "Jonathan Taylor",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "array-shuffle": "^2.0.0"
+  },
   "devDependencies": {
     "@babel/core": "^7.14.6",
     "@babel/preset-env": "^7.14.5",
