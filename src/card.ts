@@ -16,8 +16,7 @@ export class Card {
   }
 
   public colourAt(rowWithinCard: number, colWithinCard: number, orientation: Orientation): Colour {
-    // Due to card symmetry, North is same as South and East is same as West
-    const rotated = orientation == Orientation.East || orientation == Orientation.West
+    const rotated = orientation == Orientation.EastWest
     const adjustedRowWithinCard = rotated ? colWithinCard : rowWithinCard
     const adjustedColWithinCard = rotated ? 3 - rowWithinCard : colWithinCard
     const colourIndex = Card.colourIndices[adjustedRowWithinCard][adjustedColWithinCard]

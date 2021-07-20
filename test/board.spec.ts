@@ -16,7 +16,7 @@ describe('Board tests', () => {
     it('can place card when board is non-empty and there is no overlap', () => {
       const deck = new Deck()
       const card = deck.nextCard()
-      const placedCard = new PlacedCard(card, 0, 0, Orientation.North)
+      const placedCard = new PlacedCard(card, 0, 0, Orientation.NorthSouth)
       const board1 = Board.empty
       const board2 = board1.placeCard(placedCard)
       expect(board2.canPlaceCardAt(0, 4)).toBe(true)
@@ -25,7 +25,7 @@ describe('Board tests', () => {
     it('cannot place card (full overlap)', () => {
       const deck = new Deck()
       const card = deck.nextCard()
-      const placedCard = new PlacedCard(card, 0, 0, Orientation.North)
+      const placedCard = new PlacedCard(card, 0, 0, Orientation.NorthSouth)
       const board1 = Board.empty
       const board2 = board1.placeCard(placedCard)
       expect(board2.canPlaceCardAt(0, 0)).toBe(false)
@@ -34,7 +34,7 @@ describe('Board tests', () => {
     it('cannot place card (partial overlap)', () => {
       const deck = new Deck()
       const card = deck.nextCard()
-      const placedCard = new PlacedCard(card, 3, 3, Orientation.North)
+      const placedCard = new PlacedCard(card, 3, 3, Orientation.NorthSouth)
       const board1 = Board.empty
       const board2 = board1.placeCard(placedCard)
       expect(board2.canPlaceCardAt(0, 0)).toBe(false)

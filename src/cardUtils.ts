@@ -14,7 +14,7 @@ const colourToString = (colour: Colour): string => {
   }
 }
 
-export const printCard = (card: Card, orientation: Orientation = Orientation.North): void => {
+export const printCard = (card: Card, orientation: Orientation = Orientation.NorthSouth): void => {
   const lines = [0, 1, 2, 3].map(row =>
     [0, 1, 2, 3].map(col =>
       card.colourAt(row, col, orientation)).map(colourToString).join(''))

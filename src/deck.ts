@@ -66,14 +66,14 @@ export class Deck {
     cornerColour1: Colour,
     cornerColour2: Colour): [Card, Orientation] {
 
-    const maybeCard1 = Deck.findCardInternal(mainColour1, mainColour2, cornerColour1, cornerColour2, Orientation.North)
+    const maybeCard1 = Deck.findCardInternal(mainColour1, mainColour2, cornerColour1, cornerColour2, Orientation.NorthSouth)
     if (maybeCard1) {
-      return [maybeCard1, Orientation.North]
+      return [maybeCard1, Orientation.NorthSouth]
     }
 
-    const maybeCard2 = Deck.findCardInternal(mainColour1, mainColour2, cornerColour1, cornerColour2, Orientation.East)
+    const maybeCard2 = Deck.findCardInternal(mainColour1, mainColour2, cornerColour1, cornerColour2, Orientation.EastWest)
     if (maybeCard2) {
-      return [maybeCard2, Orientation.East]
+      return [maybeCard2, Orientation.EastWest]
     }
 
     throw new Error('[Deck.findCard] card not found')

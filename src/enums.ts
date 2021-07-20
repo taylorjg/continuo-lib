@@ -6,10 +6,8 @@ export enum Colour {
 }
 
 export enum Orientation {
-  North,
-  South,
-  East,
-  West
+  NorthSouth,
+  EastWest
 }
 
 export enum Direction {

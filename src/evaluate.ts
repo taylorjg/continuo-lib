@@ -52,8 +52,8 @@ export const evaluatePlacedCard = (board: Board, placedCard: PlacedCard): Possib
 export const evaluateCard = (board: Board, card: Card): PossibleMove[] => {
   const availableCardPositions = board.findAvailableCardPositions()
   const possibleMoves = availableCardPositions.flatMap(cell => {
-    const placedCard1 = new PlacedCard(card, cell.row, cell.col, Orientation.North)
-    const placedCard2 = new PlacedCard(card, cell.row, cell.col, Orientation.East)
+    const placedCard1 = new PlacedCard(card, cell.row, cell.col, Orientation.NorthSouth)
+    const placedCard2 = new PlacedCard(card, cell.row, cell.col, Orientation.EastWest)
     const possibleMove1 = evaluatePlacedCard(board, placedCard1)
     const possibleMove2 = evaluatePlacedCard(board, placedCard2)
     return [possibleMove1, possibleMove2]
