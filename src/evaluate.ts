@@ -31,6 +31,9 @@ export const evaluatePlacedCard = (board: Board, placedCard: PlacedCard): Possib
     const row = placedCard.row + rowWithinCard
     const col = placedCard.col + colWithinCard
     const cell = new Cell(row, col)
+    if (chains.some(chain => chain.containsCell(cell))) {
+      continue
+    }
     const forwardChain = newBoard.followChain(cell, forwardDirection)
     if (forwardChain.isCycle) {
       chains.push(forwardChain)
