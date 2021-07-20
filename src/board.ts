@@ -46,12 +46,19 @@ export class Board {
     if (this.placedCards.length == 0) return [new Cell(0, 0)]
     const offsets = [-3, -2, -1, 0, 1, 2, 3]
     const availableCardPositions: Cell[] = []
+    const addAvailableCardPosition = (row: number, col: number): void => {
+      const cell = new Cell(row, col)
+      const index = availableCardPositions.findIndex(availableCardPosition => availableCardPosition.equals(cell))
+      if (index < 0) {
+        availableCardPositions.push(cell)
+      }
+    }
     for (const placedCard of this.placedCards) {
       for (const offset of offsets) {
-        availableCardPositions.push(new Cell(placedCard.row - 4, placedCard.col + offset))
-        availableCardPositions.push(new Cell(placedCard.row + 4, placedCard.col + offset))
-        availableCardPositions.push(new Cell(placedCard.row + offset, placedCard.col - 4))
-        availableCardPositions.push(new Cell(placedCard.row + offset, placedCard.col + 4))
+        addAvailableCardPosition(placedCard.row - 4, placedCard.col + offset)
+        addAvailableCardPosition(placedCard.row + 4, placedCard.col + offset)
+        addAvailableCardPosition(placedCard.row + offset, placedCard.col - 4)
+        addAvailableCardPosition(placedCard.row + offset, placedCard.col + 4)
       }
     }
     return availableCardPositions.filter(cell => this.canPlaceCardAt(cell.row, cell.col))
