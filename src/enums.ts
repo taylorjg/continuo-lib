@@ -10,6 +10,16 @@ export enum Orientation {
   EastWest
 }
 
+export const isRotated = (orientation: Orientation): boolean =>
+  orientation == Orientation.EastWest
+
+export const switchOrientation = (orientation: Orientation): Orientation => {
+  switch (orientation) {
+    case Orientation.NorthSouth: return Orientation.EastWest
+    case Orientation.EastWest: return Orientation.NorthSouth
+  }
+}
+
 export enum Direction {
   Up,
   Down,

@@ -1,4 +1,4 @@
-import { Colour, Orientation } from './enums'
+import { Colour, Orientation, isRotated } from './enums'
 
 export class Card {
 
@@ -16,7 +16,7 @@ export class Card {
   }
 
   public colourAt(rowWithinCard: number, colWithinCard: number, orientation: Orientation): Colour {
-    const rotated = orientation == Orientation.EastWest
+    const rotated = isRotated(orientation)
     const adjustedRowWithinCard = rotated ? colWithinCard : rowWithinCard
     const adjustedColWithinCard = rotated ? 3 - rowWithinCard : colWithinCard
     const colourIndex = Card.colourIndices[adjustedRowWithinCard][adjustedColWithinCard]
