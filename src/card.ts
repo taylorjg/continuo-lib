@@ -11,7 +11,12 @@ export class Card {
 
   private readonly colours: readonly [Colour, Colour, Colour, Colour]
 
-  public constructor(mainColour1: Colour, mainColour2: Colour, cornerColour1: Colour, cornerColour2: Colour) {
+  public constructor(
+    mainColour1: Colour,
+    mainColour2: Colour,
+    cornerColour1: Colour,
+    cornerColour2: Colour
+  ) {
     this.colours = [mainColour1, mainColour2, cornerColour1, cornerColour2]
   }
 

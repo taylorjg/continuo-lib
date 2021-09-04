@@ -8,7 +8,8 @@ export class PlacedCard {
     public readonly card: Card,
     public readonly row: number,
     public readonly col: number,
-    public readonly orientation: Orientation) {
+    public readonly orientation: Orientation
+  ) {
   }
 
   public colourAt(row: number, col: number): Colour {

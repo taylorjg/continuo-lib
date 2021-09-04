@@ -1,4 +1,4 @@
-import { Deck } from '../src/deck'
+import { Deck } from '../src'
 
 describe('Deck tests', () => {
 

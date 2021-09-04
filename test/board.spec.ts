@@ -1,8 +1,12 @@
-import { Board } from '../src/board'
-import { Colour, Direction, Orientation } from '../src/enums'
-import { Deck } from '../src/deck'
-import { PlacedCard } from '../src/placedCard'
-import { Cell } from '../src/cell'
+import {
+  Board,
+  Cell,
+  Colour,
+  Deck,
+  Direction,
+  Orientation,
+  PlacedCard
+} from '../src'
 
 describe('Board tests', () => {
 

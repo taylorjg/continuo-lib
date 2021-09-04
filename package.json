@@ -2,7 +2,7 @@
   "name": "continuo-lib",
   "version": "0.0.0",
   "description": "Logic for Continuo",
-  "main": "index.js",
+  "main": "src/main.js",
   "scripts": {
     "tsc": "tsc",
     "test": "jest --roots test"

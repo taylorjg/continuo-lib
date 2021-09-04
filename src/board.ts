@@ -16,7 +16,8 @@ export class Board {
 
   private constructor(
     private readonly cellMap: Map<string, Colour>,
-    private readonly placedCards: readonly PlacedCard[]) {
+    private readonly placedCards: readonly PlacedCard[]
+  ) {
   }
 
   public canPlaceCardAt(proposedRow: number, proposedCol: number): boolean {
